@@ -24,4 +24,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Rota testar  banco
+Route::get('/test-db', function () {
+    try {
+        $questionsCount = \App\Models\Question::count();
+        $optionsCount = \App\Models\Option::count();
+        $quiz = \App\Models\Quiz::first();
+
+        return [
+            'questions' => $questionsCount,
+            'options' => $optionsCount,
+            'quiz' => $quiz
+        ];
+    } catch (\Exception $e) {
+        return ['error' => $e->getMessage()];
+    }
+});
+
 require __DIR__.'/auth.php';
